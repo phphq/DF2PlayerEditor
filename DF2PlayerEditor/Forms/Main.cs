@@ -50,6 +50,8 @@ namespace DF2PlayerEditor.Forms
         private void Main_Load(object sender, EventArgs e)
         {
 
+            ResetAllFields();
+
             if (FileFunctions.TestPath(Settings.Default.GamePath))
             {
                 LoadedGamePath = Settings.Default.GamePath;
@@ -159,6 +161,7 @@ namespace DF2PlayerEditor.Forms
             btnRes1280.Enabled = false;
             btnSaveConfig.Enabled = false;
             trackBarGama.Enabled = false;
+            btnSaveConfig.Enabled = false;
         }
 
         private void lbPlayerList_SelectedIndexChanged(object sender, EventArgs e)
@@ -216,6 +219,12 @@ namespace DF2PlayerEditor.Forms
 
         private void btnSaveConfig_Click(object sender, EventArgs e)
         {
+
+            if (string.IsNullOrEmpty(LoadedGamePath))
+            {
+                btnSaveConfig.Enabled = false;
+                return;
+            }
 
             FileFunctions.WriteConfigLine(Path.Combine(LoadedGamePath, Config.ConfigFile), "game_res", GameConfig["game_res"]);
             FileFunctions.WriteConfigLine(Path.Combine(LoadedGamePath, Config.ConfigFile), "gamma", GameConfig["gamma"]);
